@@ -13,7 +13,30 @@
 
 
 ### 支持情况
-1. 将原生select，将原生转化为模拟select
-2. 可设置指定数据下拉框或者array类型数据
+* 将原生select转化为模拟select
+* 可设置指定数据下拉框、array类型数据
+
+### 初始化
+* 指定原生下拉框
+    
+    <select class="simulate-select" id="test3">
+	    <option selected>1</option>
+	    <option value='2'>2</option>
+	    <option value='3'>3</option>
+	    <option value='4'>4</option>
+	  </select>
+    <script>
+      var S = KISSY;
+      S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+           var page = new SimulateSelect({
+               selectNode: '#test3',
+               isShowSelectValue: false
+           });
+      });
+    </script>
+
+
+* 指定已有的数据下拉框
+* 数据源为arr
 
 
