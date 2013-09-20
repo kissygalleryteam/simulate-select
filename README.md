@@ -37,6 +37,7 @@
 
 
 * 指定已有的数据下拉框
+* 
 	     <div class="simulate-select" id="test2"></div>
 	     <div id="J_test4" class="simulate-list">
 	         <ul>
@@ -59,6 +60,7 @@
 	     </script>
 	    
 * 数据源为arr
+
 	    <div class="simulate-select" id="test1" >
 		   <span class="J_simulate_value">出发时间</span><em></em>
 	    </div>
