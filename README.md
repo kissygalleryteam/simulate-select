@@ -37,6 +37,41 @@
 
 
 * 指定已有的数据下拉框
+     <div class="simulate-select" id="test2"></div>
+     <div id="J_test4" class="simulate-list">
+         <ul>
+	     <li class="item J_option" data-value='1'>1</li>
+	     <li class="item J_option" data-value='2'>2</li>
+         </ul>
+     </div>
+     <script>
+     var S = KISSY;
+     S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+        var page = new SimulateSelect({
+             selectNode: '#test2',
+             options: '#J_test4',
+             isShowSelectBox: false,
+             multi: true,
+             isShowSelectValue: false,
+             value: '2'
+         });
+     });
+     </script>
+    
 * 数据源为arr
+    <div class="simulate-select" id="test1" >
+	   <span class="J_simulate_value">出发时间</span><em></em>
+    </div>
+    <script>
+    var S = KISSY;
+    S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+    var page = new SimulateSelect({
+             selectNode: '#test1',
+             options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
+             isShowSelectValue: false,
+             name: 'test',
+             multi: false,
+             isShowSelectBox: false
+         });
 
 
