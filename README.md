@@ -65,7 +65,7 @@
     <script>
     var S = KISSY;
     S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
-    var page = new SimulateSelect({
+        var page = new SimulateSelect({
              selectNode: '#test1',
              options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
              isShowSelectValue: false,
@@ -73,5 +73,6 @@
              multi: false,
              isShowSelectBox: false
          });
-
+    });
+    </script>
 
