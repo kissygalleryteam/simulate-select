@@ -1,18 +1,4 @@
 ## simulateSelect（模拟下拉框）
-<<<<<<< HEAD
----------------------------------------
-
-模拟下拉框，顾名思义就是通过js实现下拉框的效果。
-
-版本： 1.0
-文档： http://gallery.kissyui.com/simulate-select/1.0/guide/index.html
-demo： http://gallery.kissyui.com/simulate-select/1.0/demo/index.html
-
-### 为什么要模拟下拉框？
-1. 原生下拉框样式难看，样式无法设置
-2. 原生下拉框交互生硬，无法定制
-3. 原生下拉框在IE6下层级较高，其他浮层无法覆盖
-=======
 
 模拟下拉框，顾名思义就是通过js实现下拉框的效果。
 
@@ -51,7 +37,7 @@ demo： http://gallery.kissyui.com/simulate-select/1.0/demo/index.html
 
 
 * 指定已有的数据下拉框
-* 
+ 
 	     <div class="simulate-select" id="test2"></div>
 	     <div id="J_test4" class="simulate-list">
 	         <ul>
@@ -92,4 +78,62 @@ demo： http://gallery.kissyui.com/simulate-select/1.0/demo/index.html
 	    });
 	    </script>
 
->>>>>>> edb4a51ad23fcecdd3602ec1ebe82d31d7a36e89
+
+
+### Attibute
+
+|attribute|type|defaultValue|description|
+|:---------------|:--------|:----|:----------|
+|selectNode| String/kissyNode | null | 下拉框触发节点 |
+|options| Array/String/kissyNode | null | 下拉选项 |
+|selectTips | String | 请选择 | 选择提醒，用户未选择内容时的提醒文案 |
+|value| String | '' | 当前选中的value |
+|isShowSelectValue| Boolean | true | 选中某个选项以后，是展示此value |
+|name| String | '' | 模拟下拉框的name, 如果是原生select，直接读取设置的name |
+|multi| Boolean | false | 是否是多选 |
+|isShowSelectBox| Boolean | true | 是否显示选择框，例如：单选显示radio button，复线显示checkbox |
+|eventType| String | click | 触发显示下拉框的事件 |
+|width| Int | -1 | 宽度，超过设定宽度则又滚动条，不设置则自适应 |
+|align| Object | { points  : ['bl', 'tl'], offset  : [0, -1], overflow: { adjustX: 0, adjustY: 0 }}  | 对齐，同Overlay的设置|
+|selectBoxClass| String | '' | 下拉框外层添加的class |
+|isHideBoxBySelected| Boolean | false | 当用户选择某一项以后是否关闭下拉框 |
+|effect| String | '' | 动画方式,  “easeNone”,”easeIn”,”easeOut”,”easeBoth”,”easeInStrong” 等|
+|duration| Int| '' | 动画shi'chan |
+
+
+
+### Events
+
+|event|param|description|
+|:----|:----|:----------|
+|show| e.trigger：下拉框节点 | 下拉框显示 |
+|hide| e.trigger：下拉框节点 | 下拉框隐藏|
+|changeValue|e.target: option节点； e.selectVal: 已经选中的值；e.value: 当前触发的option的value；e.checked: 当前触发option的选中状态 | 下拉框选中值发生变化 |
+|select|e.target: option节点； e.selectVal: 已经选中的值；e.value: 当前触发的option的value；e.checked: 当前触发option的选中状态 | 触发任意option |
+
+### Method
+
+|method|param|description|
+|:-----|:----|:----------|
+|setValue| xx,xx | 设置下拉框选中值，单选设置一项，多选设置多项 |
+|getValue| |获取下拉框选中值，返回的数据格式为xx,xx |
+|setSelectedByIndex| xx,xx |设置下拉框选中的index，单选设置一项，多选设置多项|
+|getSelectedIndex| |获取下拉框选中的index，返回的数据格式为xx,xx |
+|getOptionByIndex| xx | 获取指定Opiton|
+|changeOption| Array/String/kissyNod |修改下拉框的option|
+|show||显示下拉框|
+|hide||隐藏下拉框|
+
+
+
+
+
+
+
+         
+         
+       
+
+
+
+

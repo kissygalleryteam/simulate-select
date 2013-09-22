@@ -18,7 +18,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
     
     var CHANGE_VALUE_EVENT = 'changeValue'; 
     var SELECT_EVENT = 'select';
-    var OPTIONS_CHANGE_EVENT = 'afterOptionsChange()';
+    var OPTIONS_CHANGE_EVENT = 'afterOptionsChange';
     var VALUE_CHANGE_EVENT = 'afterValueChange';
     
     
@@ -172,11 +172,11 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            self.opitonBox.delegate('click', '.' + OPTIONClASS, self._selectItem, self); 
            
            self.popup.on('show', function(){
-               self.fire('show', {triggerNode: self.selectNode});
+               self.fire('show', {trigger: self.selectNode});
            });
            
            self.popup.on('hide', function(){
-               self.fire('hide', {triggerNode: self.selectNode});
+               self.fire('hide', {trigger: self.selectNode});
            });
            
            //afterAttrNameChange()
@@ -382,7 +382,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            return options[index];
        },
        
-       changeOpition: function(options){
+       changeOption: function(options){
        
           var self = this;     
           self.set('options', options);
