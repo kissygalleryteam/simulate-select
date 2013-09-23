@@ -109,7 +109,16 @@
 	         name: 'test',
 	         multi: false,
 	         isShowSelectBox: false,
-	         isHideBoxBySelected: true
+	         isHideBoxBySelected: true,
+	         align: {
+	                points  : ['bl', 'tl'],
+	                offset  : [0, -1],
+	                overflow: {
+	                    adjustX: 0, // 当对象不能处于可显示区域时，自动调整横坐标
+	                    adjustY: 0// 当对象不能处于可显示区域时，自动调整纵坐标
+	                }
+	           
+	         }
 	     });
 	     
 	     select.on("changeValue", function(e){
