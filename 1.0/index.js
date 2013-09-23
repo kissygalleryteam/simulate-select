@@ -154,7 +154,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            			effect: self.get('effect'),
            			duration: self.get('duration')
            		},
-           		width : self.get('width'),
+           		width : self.get('width') || self.selectNode.innerWidth(),
            		height : self.get('height')
            	});
            	
@@ -307,10 +307,10 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
             self.setValue(self.get('value')); 
        },
        
-       setValue: function(val){
+       setValue: function(){
 
            var self = this;
-           var valArr = arguments;
+           var valArr = arguments.length == 1? arguments[0].split(',') : Array.prototype.slice.call(arguments, 0);
            var options = self.opitonBox.all('.' + OPTIONClASS);
            var isShowSelectBox = self.get('isShowSelectBox');
                       
@@ -332,7 +332,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
                } 
            });
            
-           self.set('value', val);
+           self.set('value', valArr.join(','));
        
        },
        
@@ -343,7 +343,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
        
        setSelectedByIndex: function(){
            var self = this;
-           var indexArr = arguments;//index.toString().split(",");
+           var indexArr = arguments.length == 1? arguments[0].split(',') : Array.prototype.slice.call(arguments, 0);
            var options = self.opitonBox.all('.' + OPTIONClASS);
            var valArr = [];
            
