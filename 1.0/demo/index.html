@@ -32,6 +32,8 @@
     .select-value{
         display:  inline-block;
     	margin-left: 30px;
+    	*display: inline;
+    	*zoom: 1;
     }
     .code{
         margin-top: 10px;
@@ -71,7 +73,7 @@
 
 <div class="demo">
     <h3>1. 数据源为Arr</h3>
-	<div class="simulate-select" id="J_demo1" style="display: inline-block">
+	<div class="simulate-select" id="J_demo1">
 	   <span class="J_simulate_value">出发时间</span><em></em>
 	</div>
 	
@@ -79,7 +81,7 @@
 	    已选择: <span id="J_demo1_value"></span>
 	</div>
 	<div class="code"> 
-	    <p>S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) { </p>
+	    <p>S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) { </p>
 	         <p class="one-tab"> var select = new SimulateSelect({</p>
 	             <p class="two-tab">selectNode: '#J_demo1',</p>
 	             <p class="two-tab">options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],</p>
@@ -99,7 +101,7 @@
 	</div>
 	
 	<script type="text/javascript">
-	S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+	S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
 	     var select = new SimulateSelect({
 	         selectNode: '#J_demo1',
 	         options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
@@ -129,7 +131,7 @@
 	    已选择: <span id="J_demo2_value"></span>
 	</div>
 	<div class="code">
-	    <p>S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
+	    <p>S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
 	         <p class="one-tab">var select = new SimulateSelect({</p>
 	              <p class="two-tab">selectNode: '#J_demo2',</p>
 	             <p class="two-tab"> options: '#J_demo2_list',</p>
@@ -154,7 +156,7 @@
 	</div>
 	
 	<script type="text/javascript">
-	S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+	S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
 	     var select = new SimulateSelect({
 	          selectNode: '#J_demo2',
 	          options: '#J_demo2_list',
@@ -186,7 +188,7 @@
 	    已选择: <span id="J_demo3_value"></span>
 	</div>
 	<div class="code">
-	   <p>S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
+	   <p>S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
 	       <p class="one-tab"> var select = new SimulateSelect({</p>
 	         <p class="two-tab">   selectNode: '#J_demo3',</p>
 	         <p class="two-tab">   isShowSelectValue: false</p>
@@ -200,7 +202,7 @@
 	</div>
 	
 	<script type="text/javascript">
-	S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+	S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
 	     var select = new SimulateSelect({
 	         selectNode: '#J_demo3',
 	         isShowSelectValue: false
