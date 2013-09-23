@@ -93,12 +93,13 @@
 |multi| Boolean | false | 是否是多选 |
 |isShowSelectBox| Boolean | true | 是否显示选择框，例如：单选显示radio button，复线显示checkbox |
 |eventType| String | click | 触发显示下拉框的事件 |
-|width| Int | -1 | 宽度，超过设定宽度则又滚动条，不设置则自适应 |
+|width| Number | null | 宽度，超过设定宽度则又滚动条，不设置则自适应 |
+|height| Number | null | 高度，超过设定高度则有滚动条，不设置则自适应 |
 |align| Object | { points  : ['bl', 'tl'], offset  : [0, -1], overflow: { adjustX: 0, adjustY: 0 }}  | 对齐，同Overlay的设置|
 |selectBoxClass| String | '' | 下拉框外层添加的class |
 |isHideBoxBySelected| Boolean | false | 当用户选择某一项以后是否关闭下拉框 |
 |effect| String | '' | 动画方式,  “easeNone”,”easeIn”,”easeOut”,”easeBoth”,”easeInStrong” 等|
-|duration| Int| '' | 动画shi'chan |
+|duration| Number| '' | 动画shi'chan |
 
 
 
