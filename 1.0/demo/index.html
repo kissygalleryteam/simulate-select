@@ -5,117 +5,213 @@
     <title>simulate-select的demo</title>
     <script src="http://a.tbcdn.cn/s/kissy/1.3.0/kissy.js" charset="utf-8"></script>
     <link rel="stylesheet" href="http://g.tbcdn.cn/??tb/global/1.0.5/global-min.css,tb/fp/1.1.4/first-screen-min.css,tb/fp/1.1.4/second-screen-min.css?t=20130711">
-    <link href="../simulate.css" rel="stylesheet" />
+    <link href="../index.css" rel="stylesheet" />
+    <style type="text/css">
+    h2{
+        padding: 0px 60px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 24px;
+        color: #fff;
+        background: #24ABEB;
+    }
+    .demo{
+        clear: both;
+    	margin: 30px 60px;
+    	padding: 10px 15px;
+    	border: 1px solid #eee;
+    	overflow: hidden;
+    }
+    
+    h3{
+        margin-bottom: 5px;
+    	line-height: 30px;
+    	font-size: 16px;
+    	border-bottom: 1px solid #eee;
+    }
+    .select-value{
+        display:  inline-block;
+    	margin-left: 30px;
+    }
+    .code{
+        margin-top: 10px;
+        padding: 5px;
+        line-height:20px;
+        color: #666;
+    	border: 1px solid #eee;
+    }
+    .code .one-tab{
+    	text-indent: 2em;
+    }
+    .code .two-tab{
+    	text-indent: 4em;
+    }
+    </style>
+    <script>
+        var S = KISSY;
+        S.Config.debug = true;
+        if (S.Config.debug) {
+            var srcPath = "../../../";
+            S.config({
+                packages:[
+                    {
+                        name:"gallery",
+                        path: srcPath,
+                        charset:"utf-8",
+                        ignorePackageNameInUri:true
+                    }
+                ]
+            });
+        }
+    
+    </script>
 </head>
 <body>
-<h2>simulate-select的demo</h2>
+<h2>simulate-select</h2>
 
-<div>
-	<div class="simulate-select" id="test1" >
+<div class="demo">
+    <h3>1. 数据源为Arr</h3>
+	<div class="simulate-select" id="J_demo1" style="display: inline-block">
 	   <span class="J_simulate_value">出发时间</span><em></em>
 	</div>
+	
+	<div class="select-value">
+	    已选择: <span id="J_demo1_value"></span>
+	</div>
+	<div class="code"> 
+	    <p>S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) { </p>
+	         <p class="one-tab"> var select = new SimulateSelect({</p>
+	             <p class="two-tab">selectNode: '#J_demo1',</p>
+	             <p class="two-tab">options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],</p>
+	             <p class="two-tab">isShowSelectValue: false,</p>
+	             <p class="two-tab">name: 'test',</p>
+	             <p class="two-tab">multi: false,</p>
+	             <p class="two-tab">isShowSelectBox: false,</p>
+	             <p class="two-tab">isHideBoxBySelected: true</p>
+	        <p class="one-tab"> });</p>
+	         
+	        <p class="one-tab"> page.on("changeValue", function(e){</p>
+	            <p class="two-tab"> S.Node.one("#J_demo1_value").html(page.getValue());</p>
+	        <p class="one-tab"> });</p>
+	         
+	       <p> });</p>
+	    
+	</div>
+	
+	<script type="text/javascript">
+	S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+	     var select = new SimulateSelect({
+	         selectNode: '#J_demo1',
+	         options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
+	         isShowSelectValue: false,
+	         name: 'test',
+	         multi: false,
+	         isShowSelectBox: false,
+	         isHideBoxBySelected: true
+	     });
+	     
+	     select.on("changeValue", function(e){
+	         S.Node.one("#J_demo1_value").html(select.getValue());
+	     });
+	     
+	    });
+	</script>
 </div>
 
 <br/>
 
-<div style="margin:  50px 0px;">
-	<div class="simulate-select" id="test2">
+<div class="demo">
+    <h3>2. 数据源为指定列表</h3>
+	<div class="simulate-select" id="J_demo2">
 	
 	</div>
-	<div id="J_test4" class="simulate-list">
+	<div class="select-value">
+	    已选择: <span id="J_demo2_value"></span>
+	</div>
+	<div class="code">
+	    <p>S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
+	         <p class="one-tab">var select = new SimulateSelect({</p>
+	              <p class="two-tab">selectNode: '#J_demo2',</p>
+	             <p class="two-tab"> options: '#J_demo2_list',</p>
+	              <p class="two-tab">isShowSelectBox: false,</p>
+	             <p class="two-tab"> multi: true,</p>
+	             <p class="two-tab"> isShowSelectValue: true,</p>
+	             <p class="two-tab"> value: '2'</p>
+	         <p class="one-tab"> });</p>
+	         
+	         <p class="one-tab">select.on("changeValue", function(e){</p>
+	             <p class="two-tab">S.Node.one("#J_demo2_value").html(select.getValue());</p>
+	        <p class="one-tab"> });</p>
+	         
+	      <p>});
+	    
+	</div>
+	<div id="J_demo2_list" class="simulate-list">
 	   <ul>
 	        <li class="item J_option" data-value='1'>1</li>
 	        <li class="item J_option" data-value='2'>2</li>
 	   </ul>
 	</div>
+	
+	<script type="text/javascript">
+	S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+	     var select = new SimulateSelect({
+	          selectNode: '#J_demo2',
+	          options: '#J_demo2_list',
+	          isShowSelectBox: false,
+	          multi: true,
+	          isShowSelectValue: true,
+	          value: '2'
+	      });
+	     
+	     select.on("changeValue", function(e){
+	         S.Node.one("#J_demo2_value").html(select.getValue());
+	     });
+	     
+	    });
+	</script>
+	
+	
 </div>
-<br/>
 
-<div>
-	<select class="simulate-select" id="test3">
+<div class="demo">
+    <h3>3. 数据源为原生select</h3>
+	<select class="simulate-select" id="J_demo3">
 	    <option selected>1</option>
 	    <option value='2'>2</option>
 	    <option value='3'>3</option>
 	    <option value='4'>4</option>
 	</select>
+	<div class="select-value">
+	    已选择: <span id="J_demo3_value"></span>
+	</div>
+	<div class="code">
+	   <p>S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
+	       <p class="one-tab"> var select = new SimulateSelect({</p>
+	         <p class="two-tab">   selectNode: '#J_demo3',</p>
+	         <p class="two-tab">   isShowSelectValue: false</p>
+	       <p class="one-tab"> });</p>
+	        
+	       <p class="one-tab"> select.on("changeValue", function(e){</p>
+	          <p class="two-tab">  S.Node.one("#J_demo3_value").html(select.getValue());</p>
+	       <p class="one-tab"> });</p>
+	        
+	    <p>   });</p>
+	</div>
+	
+	<script type="text/javascript">
+	S.use('gallery/simulateSelect/1.0/index, overlay', function (S, SimulateSelect, overlay) {
+	     var select = new SimulateSelect({
+	         selectNode: '#J_demo3',
+	         isShowSelectValue: false
+	     });
+	     
+	     select.on("changeValue", function(e){
+	         S.Node.one("#J_demo3_value").html(select.getValue());
+	     });
+	     
+	    });
+	</script>
 </div>
-
-
-<script>
-    var S = KISSY;
-    S.Config.debug = true;
-    if (S.Config.debug) {
-        var srcPath = "../../../";
-        S.config({
-            packages:[
-                {
-                    name:"gallery",
-                    path: srcPath,
-                    charset:"utf-8",
-                    ignorePackageNameInUri:true
-                }
-            ]
-        });
-    }
-
-    S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
-         var page = new SimulateSelect({
-             selectNode: '#test1',
-             options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
-             isShowSelectValue: false,
-             name: 'test',
-             multi: false,
-             isShowSelectBox: false
-         });
-         
-         page.on("changeValue", function(e){
-            console.log(e);
-            
-            console.log(page.getValue());
-            
-            console.log(page.getSelectedIndex());
-         });
-         
-          console.log(page.getOptionByIndex(1));
-         
-                  
-         
-        var page = new SimulateSelect({
-             selectNode: '#test2',
-             options: '#J_test4',
-             isShowSelectBox: false,
-             multi: true,
-             isShowSelectValue: false,
-             value: '2'
-         });
-         
-         
-         page.on("changeValue", function(e){
-            console.log(e);
-            
-            console.log(page.getValue());
-            
-            console.log(page.getSelectedIndex());
-         });
-         
-        console.log(page.getOptionByIndex(1));
-         
-         var page = new SimulateSelect({
-             selectNode: '#test3',
-             isShowSelectValue: false
-         });
-         
-         page.on("changeValue", function(e){
-            console.log(e);
-            
-            console.log(page.getValue());
-            
-            console.log(page.getSelectedIndex());
-         });
-         
-      
-         console.log(page.getOptionByIndex(3));
-    })
-</script>
 </body>
 </html>
