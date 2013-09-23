@@ -100,7 +100,7 @@ simulateSelect（模拟下拉框）: 顾名思义就是通过js实现下拉框�
 |selectBoxClass| String | '' | 下拉框外层添加的class |
 |isHideBoxBySelected| Boolean | false | 当用户选择某一项以后是否关闭下拉框 |
 |effect| String | '' | 动画方式,  “easeNone”,”easeIn”,”easeOut”,”easeBoth”,”easeInStrong” 等|
-|duration| Int| '' | 动画shi'chan |
+|duration| Number| '' | 动画shi'chan |
 
 
 
