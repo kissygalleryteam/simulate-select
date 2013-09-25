@@ -3,6 +3,7 @@
   padding: 3px 7px;
   border: 1px solid #ddd;
   border-radius: 3px;
+  
   *display: inline;
   *zoom: 1;
 }
@@ -16,25 +17,25 @@
   border-color: #575757 #fff #fff #fff;
   border-bottom: 0;
   overflow: hidden;
+  *display: inline;
+  *zoom: 1;
 }
 .simulate-select em.up {
   border-color: #fff #fff #575757 #fff;
 }
 .simulate-list{
-   display: inline-block;
+   position: absolute;
    border: 1px solid #dbdbdb;
    background: #fff;	
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	shadow: 0 2px 2px #a1a1a1;
-	
-    *display: inline;
-	*zoom:  1;
-	_width: 10px;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+   shadow: 0 2px 2px #a1a1a1;	
+ 
 }
 .simulate-list ul{
 	margin: 3px 0px;
+	*margin: 0px;
 }
 .simulate-list li{
     padding: 0 7px 0;
@@ -54,3 +55,27 @@
 .simulate-selected,.simulate-list .simulate-selected:hover{
     background: #9cd9ff;	
 }
+
+/* overlay */
+.ks-overlay {
+    position:absolute;
+    left:-9999px;
+    top:-9999px;
+}
+.ks-overlay-hidden {
+    visibility: hidden;
+}
+
+.ks-overlay-mask-hidden {
+    display: none;
+}
+
+.ks-overlay-shown {
+    visibility: visible;
+}
+
+.ks-overlay-mask-shown{
+    display: block;
+}
+
+

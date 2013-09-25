@@ -1,7 +1,7 @@
 /*
 combined files : 
 
-gallery/simulateSelect/1.0/index
+gallery/simulate-select/1.0/index
 
 */
 /**
@@ -9,7 +9,7 @@ gallery/simulateSelect/1.0/index
  * @author lanmeng.bhy<lanmeng.bhy@taobao.com>
  * @module simulate-select
  **/
-KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate, O) {
+KISSY.add('gallery/simulate-select/1.0/index',function (S, Node, Base, XTemplate, O) {
 
     var SELECTNODE = 'SELECT'; 
     var OPTIONNODE = 'option';
@@ -24,7 +24,7 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
     
     var CHANGE_VALUE_EVENT = 'changeValue'; 
     var SELECT_EVENT = 'select';
-    var OPTIONS_CHANGE_EVENT = 'afterOptionsChange()';
+    var OPTIONS_CHANGE_EVENT = 'afterOptionsChange';
     var VALUE_CHANGE_EVENT = 'afterValueChange';
     
     
@@ -160,7 +160,7 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
            			effect: self.get('effect'),
            			duration: self.get('duration')
            		},
-           		width : self.get('width'),
+           		width : self.get('width') || self.selectNode.innerWidth(),
            		height : self.get('height')
            	});
            	
@@ -178,11 +178,11 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
            self.opitonBox.delegate('click', '.' + OPTIONClASS, self._selectItem, self); 
            
            self.popup.on('show', function(){
-               self.fire('show', {triggerNode: self.selectNode});
+               self.fire('show', {trigger: self.selectNode});
            });
            
            self.popup.on('hide', function(){
-               self.fire('hide', {triggerNode: self.selectNode});
+               self.fire('hide', {trigger: self.selectNode});
            });
            
            //afterAttrNameChange()
@@ -313,10 +313,10 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
             self.setValue(self.get('value')); 
        },
        
-       setValue: function(val){
+       setValue: function(){
 
            var self = this;
-           var valArr = arguments;
+           var valArr = arguments.length == 1? arguments[0].split(',') : Array.prototype.slice.call(arguments, 0);
            var options = self.opitonBox.all('.' + OPTIONClASS);
            var isShowSelectBox = self.get('isShowSelectBox');
                       
@@ -338,7 +338,7 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
                } 
            });
            
-           self.set('value', val);
+           self.set('value', valArr.join(','));
        
        },
        
@@ -349,7 +349,7 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
        
        setSelectedByIndex: function(){
            var self = this;
-           var indexArr = arguments;//index.toString().split(",");
+           var indexArr = arguments.length == 1? arguments[0].split(',') : Array.prototype.slice.call(arguments, 0);
            var options = self.opitonBox.all('.' + OPTIONClASS);
            var valArr = [];
            
@@ -388,7 +388,7 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
            return options[index];
        },
        
-       changeOpition: function(options){
+       changeOption: function(options){
        
           var self = this;     
           self.set('options', options);
@@ -581,7 +581,7 @@ KISSY.add('gallery/simulateSelect/1.0/index',function (S, Node, Base, XTemplate,
          
     }});
     return SimulateSelect;
-}, {requires:['node', 'base', 'xtemplate', 'overlay', './simulate.css']});
+}, {requires:['node', 'base', 'xtemplate', 'overlay', './index.css']});
 
 
 
