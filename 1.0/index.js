@@ -5,14 +5,27 @@
  **/
 KISSY.add(function (S, Node, Base, XTemplate, O) {
 
-    var SELECTNODE = 'SELECT'; 
+    var $ = Node.all;
+    var one = Node.one;
+    var DOM = S.DOM;
+    var each = S.each;
+    
+    
+    var O = S.Overlay;
+
+    var SELECTNODE = 'select'; 
     var OPTIONNODE = 'option';
     var DISABLEDNODE = 'disabled'; 
-    var SELECTEDClASS = 'simulate-selected';
-    var DISABLEDClASS = 'simulate-disabled';
+    
+    var PRECLASS = 'simulate-';
+    var SELECTEDClASS = PRECLASS + 'selected';
+    var DISABLEDClASS = SELECTEDClASS + 'disabled';
+    var OPTIONClASS = 'J_option';
+        
     var OPTIONVALUE = 'data-value';
     var SIMULATEVAL = 'J_simulate_value';
-    var OPTIONClASS = 'J_option';
+        
+    
     
     
     
@@ -22,27 +35,20 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
     var VALUE_CHANGE_EVENT = 'afterValueChange';
     
     
-    var $ = Node.all;
-    var one = Node.one;
-    var DOM = S.DOM;
-    var each = S.each;
     
     
-    var O = S.Overlay;
-    
-    
-    
-    var SELECTTPL = '<div class="simulate-select"><span class="J_simulate_value">{value}</span><em></em></div>';
-    var LISTTPL = '<div class="simulate-list">' + 
+    var SELECTTPL = '<div class="' + PRECLASS + 'select"><span class="J_simulate_value">{value}</span><em></em></div>';
+    var LISTTPL = '<div class="' + PRECLASS + 'list">' + 
                       '<ul>' + 
                           '{{#each list}}' +
-                               '<li data-value="{{value}}" class="{{#if disabled}}simulate-disabled{{/if}}  {{#if selected}}simulate-selected{{/if}} J_option">' + 
+                               '<li data-value="{{value}}" class="{{#if disabled}}' + DISABLEDClASS + '{{/if}}  {{#if selected}}' + SELECTEDClASS + '{{/if}} J_option">' + 
                                    '{{#if isShowSelectBox}}<input type="{{input}}" name="{{name}}" {{#if selected}}checked=true{{/if}}/>{{/if}}' +
                                    '{{text}}' + 
                                '</li>' + 
                           '{{/each}}' + 
                       '</ul>' + 
                   '</div>';
+    
     var INPUT = '<input type="hidden" name="{name}" />';
     
     /**
@@ -58,34 +64,45 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
         
         self._init.apply(self, arguments);
     }
+    
+    
     S.extend(SimulateSelect, Base, /** @lends SimulateSelect.prototype*/{
 
        _init: function(){
           var self = this; 
-          self.selectNode = self.get('selectNode');
+          var selectNode = self.selectNode = self.get('selectNode');
           
-          // if selectNode is null, return
-          if(!self.selectNode) return; 
+          // 如果select是空，则返回
+          if(!selectNode) return; 
           
-          //init input node，record selected value 
-          self.selectParent = self.selectNode.parent();
-          self.selectParent.append(S.substitute(INPUT, {name: self.get('name')})); 
+          //获取selectNode 的父元素
+          self.selectParent = selectNode.parent();
           
-          //if select need to record the default config
-          if(self.selectNode.getDOMNode().nodeName == SELECTNODE)  self._initNativeSelect();
+          //存储value的隐藏域
+          self.input = $(DOM.create(
+          	  //如果有name获取name，如果没有取selectNode上的属性
+          	  S.substitute(INPUT, {name: self.get('name') || selectNode.attr('name')})
+          ));
+          
+          self.selectParent.append(self.input);
+          
+          // 是否是原生select
+		  self.isNative = (selectNode.nodeName() === SELECTNODE);
+
+		  //如果是原生节点，则需要读取节点已有信息初始化select
+		  if(self.isNative){
+		      self._initNativeSelect();
+		  }
                
-          //init simulate select  
-          self._initSimulateSelect();
-          
+          //初始化select
+          self._initSimulateSelect(); 
                     
           self._initOptions();
           
           //init overlay
           self._initBox();
           
-          
-          self._bindEvent();
-          
+          self._bindEvent(); 
           
           self._changeValue();
        },
@@ -103,7 +120,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
                var item = one(item);
                arr.push({
                   text: item.text(), 
-                  value: item.val(),
+                  value: item.val() || item.text(),
                   disabled: item.attr('data-disabled'),
                   selected: item.val() == val
                });
@@ -114,27 +131,27 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
        },
        
        
-       //init select
+       //init select  -- 烧鹅
        _initSimulateSelect: function(){
-    
+           
             var self = this;
+            var selectNode = self.selectNode;
+            var selectNodeClass = selectNode.attr('class');
+            var select;
+            
+			 //if select node is not select node and is not null
+            if(self.isNative || !selectNode.children().length){
+				select = $(DOM.create(
+					S.substitute(SELECTTPL, {value: self.getSelectTips()})
+				));
 
-            //if select node is not select node and is not null
-            if(self.selectNode.children().length && self.selectNode.getDOMNode().nodeName != SELECTNODE){
-                self.simulateSelect = self.selectNode.one('.' + SIMULATEVAL);
-                return;
-            
-            }
+				//change select Node and null node to simulate select
+				selectNode.replaceWith(select);
+				selectNode = self.selectNode = select;
+			}
 
-            //change select Node and null node to simulate select
-            var selectNodeClass = self.selectNode.attr('class');
-            var selectNode = DOM.create(S.substitute(SELECTTPL, {value: self.get('selectTips')}));
-            
-            self.selectParent.getDOMNode().replaceChild(selectNode, self.selectNode.getDOMNode());
-            
-            self.selectNode = one(selectNode);
-            self.selectNode.addClass(selectNodeClass);
-            self.simulateSelect = self.selectNode.one('.' + SIMULATEVAL);
+			selectNodeClass && selectNode.addClass(selectNodeClass);
+            self.simulateSelect = selectNode.one('.' + SIMULATEVAL);
     
        },
        
@@ -144,7 +161,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            var self = this;
            
            self.popup = new O.Popup({
-                srcNode: self.opitonBox,
+                srcNode: self.optionBox,
            		trigger: self.selectNode,
            		triggerType: self.get('eventType'),
            		align: S.merge(self.get('align'), {
@@ -154,7 +171,8 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            			effect: self.get('effect'),
            			duration: self.get('duration')
            		},
-           		width : self.get('width') || self.selectNode.innerWidth(),
+           		//width : self.get('width') || self.selectNode.innerWidth(),
+           		elStyle: {minWidth: self.get('width') || self.selectNode.innerWidth()},
            		height : self.get('height')
            	});
            	
@@ -169,7 +187,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            self.on(VALUE_CHANGE_EVENT, self._changeValue, self);
            self.on(OPTIONS_CHANGE_EVENT, self._initOptions, self);
            
-           self.opitonBox.delegate('click', '.' + OPTIONClASS, self._selectItem, self); 
+           self.optionBox.delegate('click', '.' + OPTIONClASS, self._selectItem, self); 
            
            self.popup.on('show', function(){
                self.fire('show', {trigger: self.selectNode});
@@ -192,12 +210,17 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
           
           //options is Array
           if(S.isArray(options)){
+              
+              each(options, function(item){
+                  item.text = item.text || item.value;
+              });
+             
               self._renderOption(options);
           }
                   
           //is Kissy NodeList
           if(typeof options == 'string'){
-              self.opitonBox = one(options); 
+              self.optionBox = one(options); 
           }
 
           self._getValue();
@@ -216,11 +239,11 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            });
            
            var optionsBox = one(DOM.create(new XTemplate(LISTTPL).render({list: options})));
-           if(!self.opitonBox){
-               self.opitonBox = optionsBox;
+           if(!self.optionBox){
+               self.optionBox = optionsBox;
                self.selectParent.append(optionsBox);
            } else {
-               self.opitonBox.html(optionsBox.html());
+               self.optionBox.html(optionsBox.html());
            }
 
        },
@@ -247,8 +270,8 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
                }
            } else {
            
-               self.opitonBox.all('input').attr('checked', false);
-               self.opitonBox.all('.' + OPTIONClASS).removeClass(SELECTEDClASS);
+               self.optionBox.all('input').attr('checked', false);
+               self.optionBox.all('.' + OPTIONClASS).removeClass(SELECTEDClASS);
                node.addClass(SELECTEDClASS);
                inputNode && inputNode.attr('checked', true);
            }
@@ -277,7 +300,8 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            
            if(self.get('isShowSelectValue')){
            
-               var inner = self.get('value')? self.get('value') : self.get('selectTips');
+               //var inner = self.get('value')? self.get('value') : self.get('selectTips');
+               var inner = self.getText() || self.get('selectTips');
                self.simulateSelect.html(inner);
            }
        },
@@ -288,12 +312,11 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
             var self = this;
             var val = [];
             
-            each(self.opitonBox.all('.' + OPTIONClASS), function(item){
+            each(self.optionBox.all('.' + OPTIONClASS), function(item){
             
                 var node = one(item);                
                 if(node.hasClass(SELECTEDClASS)){               
-                    val.push(node.attr('data-value'));
-                    
+                    val.push(node.attr('data-value')); 
                 }
                 
             });
@@ -302,16 +325,20 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
             
        },
        
+       
        _changeValue: function(){
             var self = this;
             self.setValue(self.get('value')); 
+            
+            // FIXED: 隐藏域填值
+            self.input.val(self.get('value'));
        },
        
        setValue: function(){
 
            var self = this;
            var valArr = arguments.length == 1? arguments[0].split(',') : Array.prototype.slice.call(arguments, 0);
-           var options = self.opitonBox.all('.' + OPTIONClASS);
+           var options = self.optionBox.all('.' + OPTIONClASS);
            var isShowSelectBox = self.get('isShowSelectBox');
                       
            each(options, function(item){
@@ -333,8 +360,23 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            });
            
            self.set('value', valArr.join(','));
+           
+           // FIXED: 隐藏域填值
+           self.input.val(self.get('value'));
        
        },
+       
+       
+       /**
+   		 * 初始化原生下拉
+   		 *
+   		 * @method	getSelectTips
+   		 */
+   		getSelectTips: function(){
+   			var self = this;
+   			return self.get('selectTips');
+   		},
+   
        
        getValue: function(){
            var self = this;
@@ -344,7 +386,7 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
        setSelectedByIndex: function(){
            var self = this;
            var indexArr = arguments.length == 1? arguments[0].split(',') : Array.prototype.slice.call(arguments, 0);
-           var options = self.opitonBox.all('.' + OPTIONClASS);
+           var options = self.optionBox.all('.' + OPTIONClASS);
            var valArr = [];
            
            each(options, function(item, i){
@@ -355,10 +397,11 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            
            self.setValue(valArr.join(','));
        },
+     
        
        getSelectedIndex: function(){
            var self = this;
-           var options = self.opitonBox.all('.' + OPTIONClASS);
+           var options = self.optionBox.all('.' + OPTIONClASS);
            var index = [];
            
            each(options, function(item, i){
@@ -376,11 +419,34 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
            var options = self.get("options");
            
            if(typeof options == 'string'){
-               return self.opitonBox.all('.' + OPTIONClASS).item(index);
+               return self.optionBox.all('.' + OPTIONClASS).item(index);
            }
            
            return options[index];
        },
+       
+       /**
+        * 获取选项文本
+        *
+        * @method	_getText
+        */
+       getText: function(){
+       	 var self = this;
+       	 var text = [];
+       	 
+       	 each(self.optionBox.all('.' + OPTIONClASS), function(item){
+       	 
+       		 var node = one(item);                
+       		 if(node.hasClass(SELECTEDClASS)){               
+       			 text.push(node.text());
+       			 
+       		 }
+       		 
+       	 });
+       	 
+       	 return text.join(",");
+       },
+       
        
        changeOption: function(options){
        
@@ -545,6 +611,15 @@ KISSY.add(function (S, Node, Base, XTemplate, O) {
              value: ''
          },
          
+         
+         /**
+          * 模拟下拉框样式class前缀, 如果添加前缀，已有模拟下拉框样式无法生效
+          * @attribute preClass
+          * @type String
+          **/
+          preClass: {
+             value: PRECLASS
+          },
          
          
          /**

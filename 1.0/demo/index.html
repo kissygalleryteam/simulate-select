@@ -104,7 +104,7 @@
 	S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
 	     var select = new SimulateSelect({
 	         selectNode: '#J_demo1',
-	         options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
+	         options: [{text: '选项1', value: '1', disabled: true}, { value: '2', disabled: false}],
 	         isShowSelectValue: false,
 	         name: 'test',
 	         multi: false,
@@ -159,7 +159,7 @@
 	</div>
 	<div id="J_demo2_list" class="simulate-list">
 	   <ul>
-	        <li class="item J_option" data-value='1'>1</li>
+	        <li class="item J_option" data-value='1'>选择项1</li>
 	        <li class="item J_option" data-value='2'>2</li>
 	   </ul>
 	</div>
@@ -172,7 +172,8 @@
 	          isShowSelectBox: false,
 	          multi: true,
 	          isShowSelectValue: true,
-	          value: '2'
+	          value: '2',
+	          isShowSelectValue: true
 	      });
 	     
 	     select.on("changeValue", function(e){
@@ -187,7 +188,7 @@
 
 <div class="demo">
     <h3>3. 数据源为原生select</h3>
-	<select class="simulate-select" id="J_demo3">
+	<select class="simulate-select" id="J_demo3" name="test">
 	    <option selected>1</option>
 	    <option value='2'>2</option>
 	    <option value='3'>3</option>
