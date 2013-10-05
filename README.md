@@ -109,21 +109,27 @@
 |:----|:----|:----------|
 |show| e.trigger：下拉框节点 | 下拉框显示 |
 |hide| e.trigger：下拉框节点 | 下拉框隐藏|
-|changeValue|e.target: option节点； e.selectVal: 已经选中的值；e.value: 当前触发的option的value；e.checked: 当前触发option的选中状态 | 下拉框选中值发生变化 |
-|select|e.target: option节点； e.selectVal: 已经选中的值；e.value: 当前触发的option的value；e.checked: 当前触发option的选中状态 | 触发任意option |
+|change|e.target: option节点； e.value: 已经选中的值；e.targetVal: 当前触发的option的value | 下拉框选中值发生变化 |
+|select|e.target: option节点； e.value: 已经选中的值；e.targetVal: 当前触发的option的value | 触发任意option |
+
 
 ### Method
 
 |method|param|description|
 |:-----|:----|:----------|
-|setValue| xx,xx | 设置下拉框选中值，单选设置一项，多选设置多项 |
-|getValue| |获取下拉框选中值，返回的数据格式为xx,xx |
-|setSelectedByIndex| xx,xx |设置下拉框选中的index，单选设置一项，多选设置多项|
-|getSelectedIndex| |获取下拉框选中的index，返回的数据格式为xx,xx |
-|getOptionByIndex| xx | 获取指定Opiton|
-|changeOption| Array/String/kissyNod |修改下拉框的option|
+|value| xx,xx | 如果arguments为空，则为获取当前选中的value；如果有参数，则选中设置的value，其中value支持1，2或者'1,2' |
+|text| | 获取所选项的text |
+|getSelectTips| | 获取下拉框的提示信息 |
+|setSelectedOpitonsIndex| xx,xx | 通过设置下拉框的index选中option，参数支持1，2或者'1,2' |
+|getSelectedOptionsIndex| |获取下拉框选中的index，返回的数据格式为xx,xx |
+|getOptions| xx,xx |获取所有的option， 如果有参数，则返回指定的option |
+|addOptions| x |添加单个或者多个option，支持html片段、arr数组、kissy node |
+|removeOneOptionByIndex| x |通过索引，删除对应的option |
+|changeOptions| x |修改options|
+|clearOptions| |将options清空|
 |show||显示下拉框|
 |hide||隐藏下拉框|
+
 
 
 
