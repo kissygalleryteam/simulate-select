@@ -51,20 +51,20 @@
     </style>
     <script>
         var S = KISSY;
-        //S.Config.debug = true;
-        // if (S.Config.debug) {
-        //     var srcPath = "../../../";
-        //     S.config({
-        //         packages:[
-        //             {
-        //                 name:"gallery",
-        //                 path: srcPath,
-        //                 charset:"utf-8",
-        //                 ignorePackageNameInUri:true
-        //             }
-        //         ]
-        //     });
-        // }
+        S.Config.debug = true;
+         if (S.Config.debug) {
+             var srcPath = "../../../";
+             S.config({
+                 packages:[
+                     {
+                         name:"gallery",
+                         path: srcPath,
+                         charset:"utf-8",
+                         ignorePackageNameInUri:true
+                     }
+                 ]
+             });
+         }
     
     </script>
 </head>
@@ -85,15 +85,15 @@
 	         <p class="one-tab"> var select = new SimulateSelect({</p>
 	             <p class="two-tab">selectNode: '#J_demo1',</p>
 	             <p class="two-tab">options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],</p>
-	             <p class="two-tab">isShowSelectValue: false,</p>
+	             <p class="two-tab">isShowSelectText: false,</p>
 	             <p class="two-tab">name: 'test',</p>
 	             <p class="two-tab">multi: false,</p>
 	             <p class="two-tab">isShowSelectBox: false,</p>
 	             <p class="two-tab">isHideBoxBySelected: true</p>
 	        <p class="one-tab"> });</p>
 	         
-	        <p class="one-tab"> page.on("changeValue", function(e){</p>
-	            <p class="two-tab"> S.Node.one("#J_demo1_value").html(page.getValue());</p>
+	        <p class="one-tab"> select.on("change", function(e){</p>
+	            <p class="two-tab"> S.Node.one("#J_demo1_value").html(select.value());</p>
 	        <p class="one-tab"> });</p>
 	         
 	       <p> });</p>
@@ -104,11 +104,11 @@
 	S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
 	     var select = new SimulateSelect({
 	         selectNode: '#J_demo1',
-	         options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],
-	         isShowSelectValue: false,
+	         options: [{text: '选项1', value: '1', disabled: true}, { value: '2', disabled: false}],
+	         isShowSelectText: false,
 	         name: 'test',
 	         multi: false,
-	         isShowSelectBox: false,
+	         isShowSelectBox: true,
 	         isHideBoxBySelected: true,
 	         align: {
 	                points  : ['bl', 'tl'],
@@ -121,8 +121,8 @@
 	         }
 	     });
 	     
-	     select.on("changeValue", function(e){
-	         S.Node.one("#J_demo1_value").html(select.getValue());
+	     select.on("change", function(e){
+	         S.Node.one("#J_demo1_value").html(select.value());
 	     });
 	     
 	    });
@@ -133,7 +133,7 @@
 
 <div class="demo">
     <h3>2. 数据源为指定列表</h3>
-	<div class="simulate-select" id="J_demo2">
+	<div class="simulate-select" id="J_demo2" name="test2">
 	
 	</div>
 	<div class="select-value">
@@ -147,11 +147,11 @@
 	              <p class="two-tab">isShowSelectBox: false,</p>
 	             <p class="two-tab"> multi: true,</p>
 	             <p class="two-tab"> isShowSelectValue: true,</p>
-	             <p class="two-tab"> value: '2'</p>
+	             <p class="two-tab"> isShowSelectText: true</p>
 	         <p class="one-tab"> });</p>
 	         
-	         <p class="one-tab">select.on("changeValue", function(e){</p>
-	             <p class="two-tab">S.Node.one("#J_demo2_value").html(select.getValue());</p>
+	         <p class="one-tab">select.on("change", function(e){</p>
+	             <p class="two-tab">S.Node.one("#J_demo2_value").html(select.value());</p>
 	        <p class="one-tab"> });</p>
 	         
 	      <p>});
@@ -159,7 +159,7 @@
 	</div>
 	<div id="J_demo2_list" class="simulate-list">
 	   <ul>
-	        <li class="item J_option" data-value='1'>1</li>
+	        <li class="item J_option" data-value='1'>选择项1</li>
 	        <li class="item J_option" data-value='2'>2</li>
 	   </ul>
 	</div>
@@ -172,12 +172,14 @@
 	          isShowSelectBox: false,
 	          multi: true,
 	          isShowSelectValue: true,
-	          value: '2'
+	          isShowSelectText: true
 	      });
+	      
+	      //select.addOptions([{text: '选项1', value: '1', disabled: true}, { value: '2', disabled: false}]);
 	     
-	     select.on("changeValue", function(e){
-	         S.Node.one("#J_demo2_value").html(select.getValue());
-	     });
+	      select.on("change", function(e){
+	          S.Node.one("#J_demo2_value").html(select.value());
+	      });
 	     
 	    });
 	</script>
@@ -187,7 +189,7 @@
 
 <div class="demo">
     <h3>3. 数据源为原生select</h3>
-	<select class="simulate-select" id="J_demo3">
+	<select class="simulate-select" id="J_demo3" name="test3">
 	    <option selected>1</option>
 	    <option value='2'>2</option>
 	    <option value='3'>3</option>
@@ -200,11 +202,11 @@
 	   <p>S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
 	       <p class="one-tab"> var select = new SimulateSelect({</p>
 	         <p class="two-tab">   selectNode: '#J_demo3',</p>
-	         <p class="two-tab">   isShowSelectValue: false</p>
+	         <p class="two-tab">   isShowSelectText: true</p>
 	       <p class="one-tab"> });</p>
 	        
-	       <p class="one-tab"> select.on("changeValue", function(e){</p>
-	          <p class="two-tab">  S.Node.one("#J_demo3_value").html(select.getValue());</p>
+	       <p class="one-tab"> select.on("change", function(e){</p>
+	          <p class="two-tab">  S.Node.one("#J_demo3_value").html(select.value());</p>
 	       <p class="one-tab"> });</p>
 	        
 	    <p>   });</p>
@@ -214,15 +216,19 @@
 	S.use('gallery/simulate-select/1.0/index, overlay', function (S, SimulateSelect, overlay) {
 	     var select = new SimulateSelect({
 	         selectNode: '#J_demo3',
-	         isShowSelectValue: false
+	         isShowSelectText: true
 	     });
 	     
-	     select.on("changeValue", function(e){
-	         S.Node.one("#J_demo3_value").html(select.getValue());
+	   
+	     //console.log(select.getOptions(0,1));
+	     
+	     select.on("change", function(e){
+	         S.Node.one("#J_demo3_value").html(select.value());
 	     });
 	     
 	    });
 	</script>
+	
 </div>
 </body>
 </html>
