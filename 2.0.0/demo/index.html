@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>simulate-select的demo</title>
+    <script src="http://g.tbcdn.cn/kissy/k/1.3.0/kissy-min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="http://g.tbcdn.cn/??tb/global/2.0.0.5/global-min.css,tb/fp/1.1.4/first-screen-min.css,tb/fp/1.1.4/second-screen-min.css?t=202.0.0711">
+   
+    <style type="text/css">
+    h2{
+        padding: 0px 60px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 24px;
+        color: #fff;
+        background: #24ABEB;
+    }
+    .demo{
+        clear: both;
+    	margin: 30px 60px;
+    	padding: 10px 15px;
+    	border: 1px solid #eee;
+    	overflow: hidden;
+    }
+    
+    h3{
+        margin-bottom: 5px;
+    	line-height: 30px;
+    	font-size: 16px;
+    	border-bottom: 1px solid #eee;
+    }
+    .select-value{
+        display:  inline-block;
+    	margin-left: 30px;
+    	*display: inline;
+    	*zoom: 1;
+    }
+    .code{
+        margin-top: 10px;
+        padding: 5px;
+        line-height:20px;
+        color: #666;
+    	border: 1px solid #eee;
+    }
+    .code .one-tab{
+    	text-indent: 2em;
+    }
+    .code .two-tab{
+    	text-indent: 4em;
+    }
+    </style>
+    <script>
+        var S = KISSY;
+        S.Config.debug = true;
+         if (S.Config.debug) {
+             var srcPath = "../../../";
+             S.config({
+                 packages:[
+                     {
+                         name:"gallery-back",
+                         path: srcPath,
+                         charset:"utf-8",
+                         ignorePackageNameInUri:true
+                     }
+                 ]
+             });
+         }
+    
+    </script>
+<script>var S = KISSY;S.config({packages:[{name:"kg",path:"http://g.tbcdn.cn/kg/",charset:"utf-8",ignorePackageNameInUri:true}]});if (S.Config.debug){var srcPath = "../";S.config({packages:[{name:"kg/simulate-select/2.0.0",path:srcPath,charset:"utf-8",ignorePackageNameInUri:true}]});}</script></head>
+<body>
+<h2>simulate-select</h2>
+
+<div class="demo">
+    <h3>1. 数据源为Arr</h3>
+	<div class="simulate-select" id="J_demo1">
+	   <span class="J_simulate_value">出发时间</span><em></em>
+	</div>
+	
+	<div class="select-value">
+	    已选择: <span id="J_demo1_value"></span>
+	</div>
+	<div class="code"> 
+	    <p>S.use('kg/simulate-select/2.0.0/index, overlay', function (S, SimulateSelect, overlay) { </p>
+	         <p class="one-tab"> var select = new SimulateSelect({</p>
+	             <p class="two-tab">selectNode: '#J_demo1',</p>
+	             <p class="two-tab">options: [{text: '1', value: '1', disabled: true}, {text: '2', value: '2', disabled: false}],</p>
+	             <p class="two-tab">isShowSelectText: false,</p>
+	             <p class="two-tab">name: 'test',</p>
+	             <p class="two-tab">multi: false,</p>
+	             <p class="two-tab">isShowSelectBox: false,</p>
+	             <p class="two-tab">isHideBoxBySelected: true</p>
+	        <p class="one-tab"> });</p>
+	         
+	        <p class="one-tab"> select.on("change", function(e){</p>
+	            <p class="two-tab"> S.Node.one("#J_demo1_value").html(select.value());</p>
+	        <p class="one-tab"> });</p>
+	         
+	       <p> });</p>
+	    
+	</div>
+	
+	<script type="text/javascript">
+	S.use('kg/simulate-select/2.0.0/index, overlay', function (S, SimulateSelect, overlay) {
+	     var select = new SimulateSelect({
+	         selectNode: '#J_demo1',
+	         options: [{text: '选项1', value: '1', disabled: true}, { value: '2', disabled: false}],
+	         isShowSelectText: false,
+	         name: 'test',
+	         multi: false,
+	         isShowSelectBox: true,
+	         isHideBoxBySelected: true,
+	         align: {
+	                points  : ['bl', 'tl'],
+	                offset  : [0, -1],
+	                overflow: {
+	                    adjustX: 0, // 当对象不能处于可显示区域时，自动调整横坐标
+	                    adjustY: 0// 当对象不能处于可显示区域时，自动调整纵坐标
+	                }
+	           
+	         }
+	     });
+	     
+	     select.on("change", function(e){
+	         S.Node.one("#J_demo1_value").html(select.value());
+	     });
+	     
+	    });
+	</script>
+</div>
+
+<br/>
+
+<div class="demo">
+    <h3>2. 数据源为指定列表</h3>
+	<div class="simulate-select" id="J_demo2" name="test2">
+	
+	</div>
+	<div class="select-value">
+	    已选择: <span id="J_demo2_value"></span>
+	</div>
+	<div class="code">
+	    <p>S.use('kg/simulate-select/2.0.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
+	         <p class="one-tab">var select = new SimulateSelect({</p>
+	              <p class="two-tab">selectNode: '#J_demo2',</p>
+	             <p class="two-tab"> options: '#J_demo2_list',</p>
+	              <p class="two-tab">isShowSelectBox: false,</p>
+	             <p class="two-tab"> multi: true,</p>
+	             <p class="two-tab"> isShowSelectValue: true,</p>
+	             <p class="two-tab"> isShowSelectText: true</p>
+	         <p class="one-tab"> });</p>
+	         
+	         <p class="one-tab">select.on("change", function(e){</p>
+	             <p class="two-tab">S.Node.one("#J_demo2_value").html(select.value());</p>
+	        <p class="one-tab"> });</p>
+	         
+	      <p>});
+	    
+	</div>
+	<div id="J_demo2_list" class="simulate-list">
+	   <ul>
+	        <li class="item J_option" data-value='1'>选择项1</li>
+	        <li class="item J_option" data-value='2'>2</li>
+	   </ul>
+	</div>
+	
+	<script type="text/javascript">
+	S.use('kg/simulate-select/2.0.0/index, overlay', function (S, SimulateSelect, overlay) {
+	     var select = new SimulateSelect({
+	          selectNode: '#J_demo2',
+	          options: '#J_demo2_list',
+	          isShowSelectBox: false,
+	          multi: true,
+	          isShowSelectValue: true,
+	          isShowSelectText: true
+	      });
+	      
+	      //select.addOptions([{text: '选项1', value: '1', disabled: true}, { value: '2', disabled: false}]);
+	     
+	      select.on("change", function(e){
+	          S.Node.one("#J_demo2_value").html(select.value());
+	      });
+	     
+	    });
+	</script>
+	
+	
+</div>
+
+<div class="demo">
+    <h3>3. 数据源为原生select</h3>
+	<select class="simulate-select" id="J_demo3" name="test3">
+	    <option selected>1</option>
+	    <option value='2'>2</option>
+	    <option value='3'>3</option>
+	    <option value='4'>4</option>
+	</select>
+	<div class="select-value">
+	    已选择: <span id="J_demo3_value"></span>
+	</div>
+	<div class="code">
+	   <p>S.use('kg/simulate-select/2.0.0/index, overlay', function (S, SimulateSelect, overlay) {</p>
+	       <p class="one-tab"> var select = new SimulateSelect({</p>
+	         <p class="two-tab">   selectNode: '#J_demo3',</p>
+	         <p class="two-tab">   isShowSelectText: true</p>
+	       <p class="one-tab"> });</p>
+	        
+	       <p class="one-tab"> select.on("change", function(e){</p>
+	          <p class="two-tab">  S.Node.one("#J_demo3_value").html(select.value());</p>
+	       <p class="one-tab"> });</p>
+	        
+	    <p>   });</p>
+	</div>
+	
+	<script type="text/javascript">
+	S.use('kg/simulate-select/2.0.0/index, overlay', function (S, SimulateSelect, overlay) {
+	     var select = new SimulateSelect({
+	         selectNode: '#J_demo3',
+	         isShowSelectText: true
+	     });
+	     
+	   
+	     //console.log(select.getOptions(0,1));
+	     
+	     select.on("change", function(e){
+	         S.Node.one("#J_demo3_value").html(select.value());
+	     });
+	     
+	    });
+	</script>
+	
+</div>
+</body>
+</html>
